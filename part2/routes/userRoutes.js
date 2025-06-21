@@ -69,3 +69,20 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Login failed' });
   }
 });
+const path = require('path');
+
+// Owner Dashboard
+router.get('/owner-dashboard', (req, res) => {
+  if (req.session.user?.role !== 'owner') {
+    return res.redirect('/');
+  }
+  res.sendFile(path.join(__dirname, '../public/owner-dashboard.html'));
+});
+
+// Walker Dashboard
+router.get('/walker-dashboard', (req, res) => {
+  if (req.session.user?.role !== 'walker') {
+    return res.redirect('/');
+  }
+  res.sendFile(path.join(__dirname, '../public/walker-dashboard.html'));
+});
