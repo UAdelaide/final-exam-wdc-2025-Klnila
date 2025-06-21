@@ -19,7 +19,7 @@ async function initDB() {
   const schemaSQL = fs.readFileSync(path.join(__dirname, 'dogwalks.sql'), 'utf8');
   await setup.query(schemaSQL);
   await setup.end();
-
+}
 
 // /api/dogs - list dogs with size and owner's username
 app.get('/api/dogs', async (req, res) => {
