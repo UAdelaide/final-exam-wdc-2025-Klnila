@@ -102,6 +102,7 @@
         const message = ref('');
         const error = ref('');
 
+        //fetching dogs
         async function loadDogs() {
       try {
         const res = await fetch('/api/users/my-dogs');
