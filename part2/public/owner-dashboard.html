@@ -77,20 +77,6 @@
   });
 </script>
 
-<form id="walkRequestForm">
-  <label for="dogSelect">Select Your Dog:</label>
-  <select id="dogSelect" name="dog_id" required>
-    <option value="">-- Choose a dog --</option>
-    <!-- options added by JS -->
-  </select>
-
-  <!-- Other fields like date/time, duration, location -->
-  <input type="datetime-local" name="requested_time" required />
-  <input type="number" name="duration_minutes" required min="15" />
-  <input type="text" name="location" required />
-
-  <button type="submit">Create Request</button>
-</form>
 
   <script>
     const { createApp, ref, onMounted } = Vue;
