@@ -20,29 +20,6 @@ async function initDB() {
   await setup.query(schemaSQL);
   await setup.end();
 
-  // Seed minimal test data (if not already exists)
-  await db.query(`
-    INSERT IGNORE INTO Users (user_id, username, email, password_hash, role) VALUES
-    (1, 'alice123', 'alice@example.com', 'hashed123', 'owner'),
-    (2, 'bobwalker', 'bob@example.com', 'hashed456', 'walker'),
-    (3, 'carol123', 'carol@example.com', 'hashed789', 'owner'),
-    (4, 'newwalker', 'new@example.com', 'hashed000', 'walker');
-
-    INSERT IGNORE INTO Dogs (dog_id, owner_id, name, size) VALUES
-    (1, 1, 'Max', 'medium'),
-    (2, 3, 'Bella', 'small');
-
-    INSERT IGNORE INTO WalkRequests (request_id, dog_id, requested_time, duration_minutes, location, status) VALUES
-    (1, 1, '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
-    (2, 2, '2025-06-11 09:00:00', 45, 'Beachside Ave', 'completed');
-
-    INSERT IGNORE INTO WalkRatings (rating_id, request_id, walker_id, owner_id, rating) VALUES
-    (1, 2, 2, 3, 4);
-
-    INSERT IGNORE INTO WalkApplications (application_id, request_id, walker_id, status) VALUES
-    (1, 2, 2, 'accepted');
-  `);
-}
 
 // /api/dogs - list dogs with size and owner's username
 app.get('/api/dogs', async (req, res) => {
