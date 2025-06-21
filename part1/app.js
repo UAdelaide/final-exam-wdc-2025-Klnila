@@ -27,7 +27,9 @@ async function initDB() {
   });
 }
 
-
+app.get('/', (req, res) => {
+  res.send('API is working!');
+});
 // /api/dogs - list dogs with size and owner's username
 app.get('/api/dogs', async (req, res) => {
   try {
