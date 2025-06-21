@@ -20,8 +20,8 @@
       </div>
       <div class="card-body">
         <form @submit.prevent="submitWalkRequest">
-          
-          <div class="mb-3">
+
+          <div class="mb-3"><!-- drop down menu for dog name -->
             <label class="form-label">Select Your Dog</label>
             <select v-model="form.dog_id" class="form-select" required>
               <option disabled value="">-- Choose a dog --</option>
