@@ -51,14 +51,13 @@ router.post('/login', async (req, res) => {
 
     const user = rows[0];
 
-    // ✅ Save to session
+
     req.session.user = {
       id: user.user_id,
       username: user.username,
       role: user.role
     };
 
-    // ✅ Respond with redirect path
     if (user.role === 'owner') {
       res.json({ message: 'Login successful', redirect: '/owner-dashboard' });
     } else if (user.role === 'walker') {
