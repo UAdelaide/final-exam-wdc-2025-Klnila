@@ -1,25 +1,32 @@
-const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const mysql = require('mysql2/promise');
-
-const app = express();
-const port = 8080;
 
 let db;
 
 async function initDB() {
-  // Connect without database first to run DROP/CREATE DATABASE
+  // Step 1: Connect without selecting a database
   const setup = await mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '', // your MySQL password here
+    password: '', // update if needed
     multipleStatements: true
   });
 
-  // Load schema
-  const schemaSQL = fs.readFileSync(path.join(__dirname, 'dogwalks.sql'), 'utf8');
-  await setup.query(schemaSQL);
+  // Step 2: Load and run the dogwalks.sql file (schema + test data)
+  const fullSQL = fs.readFileSync(path.join(__dirname, 'dogwalks.sql'), 'utf8');
+  await setup.query(fullSQL);
   await setup.end();
+
+  // Step 3: Connect to DogWalkService DB for app queries
+  db = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'DogWalkService'
+  });
 }
+
 
 // /api/dogs - list dogs with size and owner's username
 app.get('/api/dogs', async (req, res) => {
