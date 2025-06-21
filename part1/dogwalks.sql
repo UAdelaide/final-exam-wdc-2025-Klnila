@@ -53,3 +53,8 @@ CREATE TABLE WalkRatings (
     FOREIGN KEY (owner_id) REFERENCES Users(user_id),
     CONSTRAINT unique_rating_per_walk UNIQUE (request_id)
 );
+((SELECT dog_id FROM Dogs WHERE name = 'Max'), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
+  ((SELECT dog_id FROM Dogs WHERE name = 'Bella'), '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted'),
+  ((SELECT dog_id FROM Dogs WHERE name = 'Rocky'), '2025-06-11 10:00:00', 60, 'Hilltop Park', 'open'),
+  ((SELECT dog_id FROM Dogs WHERE name = 'Luna'), '2025-06-12 14:00:00', 30, 'Riverside Walk', 'open'),
+  ((SELECT dog_id FROM Dogs WHERE name = 'Charlie'), '2025-06-13 16:30:00', 40, 'City Gardens', 'cancelled');
