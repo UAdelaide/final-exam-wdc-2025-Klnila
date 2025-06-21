@@ -86,3 +86,15 @@ router.get('/walker-dashboard', (req, res) => {
   }
   res.sendFile(path.join(__dirname, '../public/walker-dashboard.html'));
 });
+
+//the bottom of userRoutes.js
+router.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Logout error:', err);
+      return res.status(500).json({ error: 'Failed to logout' });
+    }
+    res.clearCookie('connect.sid'); // default session cookie name
+    res.json({ message: 'Logged out' });
+  });
+});
