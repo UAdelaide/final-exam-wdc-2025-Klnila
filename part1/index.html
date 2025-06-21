@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dog of the Day</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    /* Bad color contrast */
+    body {
+      background-color: #222;
+      color: #555;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Tiny button and text */
+    button {
+      font-size: 8px;
+      padding: 2px 4px;
+      margin: 2px;
+      cursor: pointer;
+    }
+
+    /* Cluttered layout with no spacing */
+    .container {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .dog-info, .dog-image {
+      width: 49%;
+      margin: 0;
+      padding: 0;
+      border: 1px solid #333;
+    }
+
+    /* Tiny clickable area for the image */
+    img {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* No focus outline for keyboard users */
+    img:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="container" aria-label="Dog of the day container">
+    <div class="dog-info">
+      <h1>Dog of the Day: <span tabindex="0">{{ dogName }}</span></h1>
+      <p tabindex="0">Breed: {{ dogBreed }}</p>
+      <p tabindex="0">Age: {{ dogAge }}</p>
+      <p tabindex="0">Description: This is a lovely dog who loves to walk in the park all day long and play fetch endlessly. More info below.</p>
+      <button @click="alert('You clicked learn more!')" aria-label="Learn more about the dog">Learn More</button>
+    </div>
+    <div class="dog-image">
+      <!-- Missing alt attribute for accessibility -->
+      <img
+        :src="dogImageUrl"
+        tabindex="0"
+        @click="alert('Dog image clicked!')"
+        role="button"
+        aria-hidden="true"
+      />
+      <!-- Small text with bad contrast -->
+      <p style="font-size: 6px; color: #444;">Click the picture!</p>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          dogName: 'Fluffy',
+          dogBreed: 'Golden Retriever',
+          dogAge: '3 years',
+          dogImageUrl: ''
+        };
+      },
+      methods: {
+        fetchDogImage() {
+          fetch('https://dog.ceo/api/breeds/image/random')
+            .then(response => response.json())
+            .then(data => {
+              this.dogImageUrl = data.message;
+            })
+            .catch(() => {
+              this.dogImageUrl = '';
+            });
+        }
+      },
+      mounted() {
+        this.fetchDogImage();
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
