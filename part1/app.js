@@ -10,7 +10,6 @@ async function initDB() {
   db = await mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '', // change if needed
     database: 'DogWalkService'
   });
    await db.query(`
