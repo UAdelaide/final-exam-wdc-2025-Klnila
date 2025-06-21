@@ -76,7 +76,7 @@ app.get('/api/walkers/summary', async (req, res) => {
 app.listen(port, async () => {
   try {
     await initDB();
-    console.log(`✅ Server running at http://localhost:8080`);
+    console.log(`✅ Server running at http://localhost:${port}`);
   } catch (err) {
     console.error('❌ Database connection failed:', err.message);
   }
