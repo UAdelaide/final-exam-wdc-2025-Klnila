@@ -11,7 +11,7 @@ async function initDB() {
     host: 'localhost',
     user: 'root',
     password: '', // change if needed
-    database: 'DogWalkService'
+    database: 'dogwalks'
   });
 }
 // /api/dogs - list dogs with size and owner's username
