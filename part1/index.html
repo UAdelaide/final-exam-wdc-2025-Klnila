@@ -68,34 +68,57 @@
       />
     </div>
   </div>
+<script>
+  const { createApp } = Vue;
 
-  <script>
-    const { createApp } = Vue;
-
-    createApp({
-      data() {
-        return {
-          dogName: 'Fluffy',
-          dogAge: '3 years',
-          dogImageUrl: ''
-        };
+  createApp({
+    data() {
+      return {
+        dogName: 'Fluffy',
+        dogBreed: 'Unknown',
+        dogAge: '3 years',
+        dogImageUrl: ''
+      };
+    },
+    methods: {
+      fetchDogImage() {
+        fetch('https://dog.ceo/api/breeds/image/random')
+          .then(response => response.json())
+          .then(data => {
+            this.dogImageUrl = data.message;
+            this.dogBreed = this.extractBreedFromUrl(this.dogImageUrl);
+          })
+          .catch(() => {
+            this.dogImageUrl = '';
+            this.dogBreed = 'Unknown';
+          });
       },
-      methods: {
-        fetchDogImage() {
-          fetch('https://dog.ceo/api/breeds/image/random')
-            .then(response => response.json())
-            .then(data => {
-              this.dogImageUrl = data.message;
-            })
-            .catch(() => {
-              this.dogImageUrl = '';
-            });
+      extractBreedFromUrl(url) {
+        // Example url:
+        // https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg
+        // We want to extract "hound-afghan"
+        try {
+          const parts = url.split('/');
+          // parts[4] should be "breeds"
+          // parts[5] should be breed string
+          if (parts.length > 5) {
+            let breedStr = parts[5];
+            // Replace dash with space and capitalize each word
+            return breedStr
+              .split('-')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ');
+          }
+          return 'Unknown';
+        } catch {
+          return 'Unknown';
         }
-      },
-      mounted() {
-        this.fetchDogImage();
       }
-    }).mount('#app');
-  </script>
+    },
+    mounted() {
+      this.fetchDogImage();
+    }
+  }).mount('#app');
+</script>
 </body>
 </html>
