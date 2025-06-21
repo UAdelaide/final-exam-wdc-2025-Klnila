@@ -103,10 +103,9 @@
           // parts[5] should be breed string
           if (parts.length > 5) {
             let breedStr = parts[5];
-            // Replace dash with space and capitalize each word
+            // Replace dash with space
             return breedStr
               .split('-')
-              
               .join(' ');
           }
           return 'Unknown';
