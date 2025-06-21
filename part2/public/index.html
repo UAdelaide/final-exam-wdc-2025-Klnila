@@ -16,6 +16,37 @@
     <a href="owner-dashboard.html" class="btn btn-outline-primary me-2">Owner Dashboard</a>
     <a href="walker-dashboard.html" class="btn btn-outline-success">Walker Dashboard</a>
   </div>
+  <!-- ✏️ Add this inside the body -->
+<form id="loginForm">
+  <input type="text" name="username" placeholder="Username" required />
+  <input type="password" name="password" placeholder="Password" required />
+  <button type="submit">Log In</button>
+</form>
+
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const data = {
+      username: formData.get("username"),
+      password: formData.get("password"),
+    };
+
+    const res = await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      const result = await res.json();
+      window.location.href = result.redirect;
+    } else {
+      alert("Login failed");
+    }
+  });
+</script>
+
 
   <script>
     const { createApp } = Vue;
