@@ -52,6 +52,7 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
+
 // /api/walkrequests/open - list open walk requests with dog and owner info
 app.get('/api/walkrequests/open', async (req, res) => {
   try {
