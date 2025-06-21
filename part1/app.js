@@ -7,12 +7,18 @@ const port = 8080;
 let db;
 
 async function initDB() {
-  db = await mysql.createConnection({
+  // Connect without database first to run DROP/CREATE DATABASE
+  const setup = await mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '', // change if needed
-    database: 'DogWalkService'
+    password: '', // your MySQL password here
+    multipleStatements: true
   });
+
+  // Load schema
+  const schemaSQL = fs.readFileSync(path.join(__dirname, 'dogwalks.sql'), 'utf8');
+  await setup.query(schemaSQL);
+  await setup.end();
 
   // Seed minimal test data (if not already exists)
   await db.query(`
